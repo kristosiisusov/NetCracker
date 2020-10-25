@@ -1,8 +1,11 @@
 package com.nc.labs.repositories;
 
 
+import com.nc.labs.exceptions.EmptyRepositoryException;
+import com.nc.labs.exceptions.NotFoundElement;
+
 public interface Repository<T> {
- void add();
- void remove(long id);
- T get(long id);
+ void add(T obj);
+ void removeItemById(long id) throws EmptyRepositoryException, NotFoundElement;
+ T getItemById(long id) throws EmptyRepositoryException, NotFoundElement;
 }
