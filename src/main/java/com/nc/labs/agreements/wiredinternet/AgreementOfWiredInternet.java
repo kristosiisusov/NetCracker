@@ -4,10 +4,17 @@ import com.nc.labs.agreements.Agreement;
 import com.nc.labs.people.Person;
 
 import java.util.Calendar;
+import java.util.Objects;
+import java.util.UUID;
 
 public class AgreementOfWiredInternet extends Agreement {
     private double connectionSpeed;
 
+    public AgreementOfWiredInternet(Calendar beginning, Calendar end,
+                                    int number, Person owner, double connectionSpeed) {
+        super(beginning, end, number, owner);
+        this.connectionSpeed = connectionSpeed;
+    }
     public double getConnectionSpeed() {
         return connectionSpeed;
     }
@@ -21,13 +28,14 @@ public class AgreementOfWiredInternet extends Agreement {
         return super.getBeginning();
     }
 
+
     @Override
     public void setBeginning(Calendar beginning) {
         super.setBeginning(beginning);
     }
 
     @Override
-    public long getId() {
+    public UUID getId() {
         return super.getId();
     }
 
@@ -47,11 +55,6 @@ public class AgreementOfWiredInternet extends Agreement {
     }
 
     @Override
-    public void setId(long id) {
-        super.setId(id);
-    }
-
-    @Override
     public void setEnd(Calendar end) {
         super.setEnd(end);
     }
@@ -64,5 +67,19 @@ public class AgreementOfWiredInternet extends Agreement {
     @Override
     public void setOwner(Person owner) {
         super.setOwner(owner);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AgreementOfWiredInternet that = (AgreementOfWiredInternet) o;
+        return Double.compare(that.connectionSpeed, connectionSpeed) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), connectionSpeed);
     }
 }

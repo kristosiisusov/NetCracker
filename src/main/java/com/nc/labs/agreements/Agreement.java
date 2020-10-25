@@ -3,13 +3,23 @@ package com.nc.labs.agreements;
 import com.nc.labs.people.Person;
 
 import java.util.Calendar;
+import java.util.Objects;
+import java.util.UUID;
 
 public abstract class Agreement {
-    private long id;
+    private UUID id;
     private Calendar beginning;
     private Calendar end;
     private int number;
     private Person owner;
+
+    public Agreement(Calendar beginning, Calendar end, int number, Person owner) {
+        this.id = UUID.randomUUID();
+        this.beginning = beginning;
+        this.end = end;
+        this.number = number;
+        this.owner = owner;
+    }
 
     public Calendar getBeginning() {
         return beginning;
@@ -19,10 +29,9 @@ public abstract class Agreement {
         this.beginning = beginning;
     }
 
-    public long getId() {
+    public UUID getId() {
         return id;
     }
-
 
     public Calendar getEnd() {
         return end;
@@ -36,10 +45,6 @@ public abstract class Agreement {
         return owner;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public void setEnd(Calendar end) {
         this.end = end;
     }
@@ -50,5 +55,22 @@ public abstract class Agreement {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Agreement agreement = (Agreement) o;
+        return number == agreement.number &&
+                Objects.equals(id, agreement.id) &&
+                Objects.equals(beginning, agreement.beginning) &&
+                Objects.equals(end, agreement.end) &&
+                Objects.equals(owner, agreement.owner);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, beginning, end, number, owner);
     }
 }

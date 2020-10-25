@@ -3,9 +3,10 @@ package com.nc.labs.people;
 
 
 import java.util.Calendar;
+import java.util.UUID;
 
 public class Person {
-    private long id;
+    private UUID id;
     private String lastName;
     private String firstName;
     private String middleName;
@@ -15,12 +16,21 @@ public class Person {
     private int seriesOfPassport;
     private int numberOfPassport;
 
-    public long getId() {
-        return id;
+    public Person(String lastName, String firstName, String middleName, Calendar birthdate,
+                  Gender gender, int age, int seriesOfPassport, int numberOfPassport) {
+        this.id = UUID.randomUUID();
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.birthdate = birthdate;
+        this.gender = gender;
+        this.age = age;
+        this.seriesOfPassport = seriesOfPassport;
+        this.numberOfPassport = numberOfPassport;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public UUID getId() {
+        return id;
     }
 
     public String getLastName() {

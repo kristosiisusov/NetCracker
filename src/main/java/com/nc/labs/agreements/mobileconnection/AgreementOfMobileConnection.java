@@ -6,11 +6,21 @@ import com.nc.labs.agreements.Agreement;
 import com.nc.labs.people.Person;
 
 import java.util.Calendar;
+import java.util.Objects;
+import java.util.UUID;
 
 public class AgreementOfMobileConnection extends Agreement {
     private int countOfMinutes;
     private int countOfSms;
     private int countOfGbTraffic;
+
+    public AgreementOfMobileConnection(Calendar beginning, Calendar end, int number, Person owner,
+                                       int countOfMinutes, int countOfSms, int countOfGbTraffic) {
+        super(beginning, end, number, owner);
+        this.countOfMinutes = countOfMinutes;
+        this.countOfSms = countOfSms;
+        this.countOfGbTraffic = countOfGbTraffic;
+    }
 
     public int getCountOfMinutes() {
         return countOfMinutes;
@@ -47,7 +57,7 @@ public class AgreementOfMobileConnection extends Agreement {
     }
 
     @Override
-    public long getId() {
+    public UUID getId() {
         return super.getId();
     }
 
@@ -67,11 +77,6 @@ public class AgreementOfMobileConnection extends Agreement {
     }
 
     @Override
-    public void setId(long id) {
-        super.setId(id);
-    }
-
-    @Override
     public void setEnd(Calendar end) {
         super.setEnd(end);
     }
@@ -84,5 +89,21 @@ public class AgreementOfMobileConnection extends Agreement {
     @Override
     public void setOwner(Person owner) {
         super.setOwner(owner);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        AgreementOfMobileConnection that = (AgreementOfMobileConnection) o;
+        return countOfMinutes == that.countOfMinutes &&
+                countOfSms == that.countOfSms &&
+                countOfGbTraffic == that.countOfGbTraffic;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), countOfMinutes, countOfSms, countOfGbTraffic);
     }
 }
