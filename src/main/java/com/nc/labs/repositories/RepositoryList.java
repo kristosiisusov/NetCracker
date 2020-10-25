@@ -8,6 +8,9 @@ import com.nc.labs.exceptions.NotFoundElement;
 
 import java.util.UUID;
 
+/**
+ * expanding repository which hold different kinds of agreement
+ */
 public class RepositoryList implements Repository<Agreement> {
     private int capacity = 2;
     private int occupancy = 0;
@@ -22,7 +25,10 @@ public class RepositoryList implements Repository<Agreement> {
         this.capacity = capacity;
     }
 
-
+    /**
+     * adding new item to the end of repository
+     * @param obj new agreement which would be add to repository
+     */
     public void add(Agreement obj) {
         if (occupancy >= capacity) {
             int tempCapacity = capacity * 2;
@@ -39,22 +45,37 @@ public class RepositoryList implements Repository<Agreement> {
         occupancy++;
     }
 
+    /**
+     * removing item of repository by id
+     * @param id identification of each items
+     */
     public void removeItemById(UUID id) throws EmptyRepositoryException, NotFoundElement {
-        if ((occupancy - 1) == getIndexById(id)) {
-            array[getIndexById(id)] = null;
+        int index = getIndexById(id);
+        if ((occupancy - 1) == index) {
+            array[index] = null;
             occupancy--;
         } else {
-            for (int i = getIndexById(id); i < occupancy - 1; i++) {
+            for (int i = index; i < occupancy - 1; i++) {
                 array[i] = array[i + 1];
                 occupancy--;
             }
         }
     }
 
+    /**
+     * getting item of repository by id
+     * @param id identification of each items
+     * @return agreement by id
+     */
     public Agreement getItemById(UUID id) throws EmptyRepositoryException, NotFoundElement {
         return array[getIndexById(id)];
     }
 
+    /**
+     * utility method which return index of items by their id
+     * @param id identification of each items
+     * @return index of item to repository
+     */
     private Integer getIndexById(UUID id) throws EmptyRepositoryException, NotFoundElement {
         int index;
         if (occupancy != 0) {
@@ -72,10 +93,17 @@ public class RepositoryList implements Repository<Agreement> {
         }
     }
 
+    /**
+     * calculating length of repository
+     * @return count of fully items
+     */
     public Integer length() {
         return occupancy;
     }
 
+    /**
+     * removing items of repository from the end
+     */
     @Override
     public void remove() throws EmptyRepositoryException {
         if (occupancy != 0) {
