@@ -1,5 +1,7 @@
 package com.nc.labs.agreements.digitaltv;
-
+/**
+ * Class which can be modify in the long run
+ */
 public class Channel {
     String name;
 

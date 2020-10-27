@@ -2,33 +2,74 @@ package com.nc.labs.people;
 
 
 
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.UUID;
 
 public class Person {
+    /**
+     * Personal information about individual
+     */
     private UUID id;
     private String lastName;
     private String firstName;
     private String middleName;
-    private Calendar birthdate;
+    private LocalDate birthdate;
     private Gender gender;
     private int age;
-    private int seriesOfPassport;
-    private int numberOfPassport;
+    Passport passport;
 
-    public Person(String lastName, String firstName, String middleName, Calendar birthdate,
-                  Gender gender, int age, int seriesOfPassport, int numberOfPassport) {
+    public Person(String lastName, String firstName, String middleName, LocalDate birthdate,
+                  Gender gender, int seriesOfPassport, int numberOfPassport) {
         this.id = UUID.randomUUID();
         this.lastName = lastName;
         this.firstName = firstName;
         this.middleName = middleName;
         this.birthdate = birthdate;
         this.gender = gender;
-        this.age = age;
-        this.seriesOfPassport = seriesOfPassport;
-        this.numberOfPassport = numberOfPassport;
+        this.age = calculateAge(birthdate);
+        this.passport = new Passport(seriesOfPassport,numberOfPassport);
     }
 
+    /**
+     * class to store the data from person's passport
+     */
+    private class Passport{
+        private int seriesOfPassport;
+        private int numberOfPassport;
+
+        public Passport(int seriesOfPassport, int numberOfPassport) {
+            this.seriesOfPassport = seriesOfPassport;
+            this.numberOfPassport = numberOfPassport;
+
+        }
+
+        public int getSeriesOfPassport() {
+            return seriesOfPassport;
+        }
+
+        public void setSeriesOfPassport(int seriesOfPassport) {
+            this.seriesOfPassport = seriesOfPassport;
+        }
+
+        public int getNumberOfPassport() {
+            return numberOfPassport;
+        }
+
+        public void setNumberOfPassport(int numberOfPassport) {
+            this.numberOfPassport = numberOfPassport;
+        }
+    }
+
+    /**
+     * calculating age of person.
+     * @return years of person. can be modify in the long run so
+     * that would return month and days too
+     */
+    private Integer calculateAge(LocalDate birthdate){
+        Period period = Period.between(birthdate, LocalDate.now());
+        return period.getYears();
+    }
     public UUID getId() {
         return id;
     }
@@ -57,11 +98,11 @@ public class Person {
         this.middleName = middleName;
     }
 
-    public Calendar getBirthdate() {
+    public LocalDate getBirthdate() {
         return birthdate;
     }
 
-    public void setBirthdate(Calendar birthdate) {
+    public void setBirthdate(LocalDate birthdate) {
         this.birthdate = birthdate;
     }
 
@@ -77,23 +118,7 @@ public class Person {
         return age;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public int getSeriesOfPassport() {
-        return seriesOfPassport;
-    }
-
-    public void setSeriesOfPassport(int seriesOfPassport) {
-        this.seriesOfPassport = seriesOfPassport;
-    }
-
-    public int getNumberOfPassport() {
-        return numberOfPassport;
-    }
-
-    public void setNumberOfPassport(int numberOfPassport) {
-        this.numberOfPassport = numberOfPassport;
+    public void setAge(LocalDate birthdate) {
+        this.age = calculateAge(birthdate);
     }
 }

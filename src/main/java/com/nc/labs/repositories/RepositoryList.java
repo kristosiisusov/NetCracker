@@ -3,6 +3,7 @@ package com.nc.labs.repositories;
 
 import com.nc.labs.agreements.Agreement;
 import com.nc.labs.exceptions.EmptyRepositoryException;
+import com.nc.labs.exceptions.FoundExistingId;
 import com.nc.labs.exceptions.NotFoundElement;
 
 
@@ -29,22 +30,41 @@ public class RepositoryList implements Repository<Agreement> {
      * adding new item to the end of repository
      * @param obj new agreement which would be add to repository
      */
-    public void add(Agreement obj) {
-        if (occupancy >= capacity) {
-            int tempCapacity = capacity * 2;
-            Agreement[] newArray = new Agreement[tempCapacity];
-            if (capacity >= 0) {
-                System.arraycopy(array, 0, newArray, 0, capacity);
+    public void add(Agreement obj) throws FoundExistingId {
+        if(!searchSameItems(obj.getId())) {
+            if (occupancy >= capacity) {
+                int tempCapacity = capacity * 2;
+                Agreement[] newArray = new Agreement[tempCapacity];
+                if (capacity >= 0) {
+                    System.arraycopy(array, 0, newArray, 0, capacity);
+                }
+                newArray[capacity] = obj;
+                array = newArray;
+                capacity = tempCapacity;
+            } else {
+                array[occupancy] = obj;
             }
-            newArray[capacity] = obj;
-            array = newArray;
-            capacity = tempCapacity;
+            occupancy++;
         } else {
-            array[occupancy] = obj;
+            throw new FoundExistingId("There is item with existing id");
         }
-        occupancy++;
     }
 
+    /**
+     * validation of items before adding to repository for adding only different items
+     * @return true = have found items with similar id
+     */
+    private boolean searchSameItems(UUID id){
+        boolean flag = false;
+        int i = 0;
+        while (i < occupancy && !flag){
+            if((id.compareTo(array[i].getId()) == 0)){
+                flag = true;
+            }
+            i++;
+        }
+        return flag;
+    }
     /**
      * removing item of repository by id
      * @param id identification of each items

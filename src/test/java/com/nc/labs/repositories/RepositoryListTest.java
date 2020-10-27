@@ -6,7 +6,9 @@ import com.nc.labs.agreements.digitaltv.AgreementOfDigitalTv;
 import com.nc.labs.agreements.digitaltv.Channel;
 import com.nc.labs.agreements.mobileconnection.AgreementOfMobileConnection;
 import com.nc.labs.agreements.wiredinternet.AgreementOfWiredInternet;
+import com.nc.labs.agreements.wiredinternet.TypeOfSpeed;
 import com.nc.labs.exceptions.EmptyRepositoryException;
+import com.nc.labs.exceptions.FoundExistingId;
 import com.nc.labs.exceptions.NotFoundElement;
 import com.nc.labs.people.Gender;
 import com.nc.labs.people.Person;
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,22 +32,22 @@ class RepositoryListTest {
 
     @BeforeAll
     static void setUp() {
+        LocalDate birthday = LocalDate.of(1990, 5, 15);
         person = new Person("Watson", "Emma", "Charlotte",
-                new GregorianCalendar(1990, Calendar.MAY, 15), Gender.FEMALE,
-                30, 2002, 123456);
+                birthday, Gender.FEMALE, 2002, 123456);
         listOfChannel = new ArrayList<>();
         listOfChannel.add(new Channel("TestFirstChannel"));
     }
 
     @Test
-    void testAdd() throws NotFoundElement, EmptyRepositoryException {
+    void testAdd() throws NotFoundElement, EmptyRepositoryException, FoundExistingId {
         repository = new RepositoryList();
         agreementOfMobileConnection = new AgreementOfMobileConnection(new GregorianCalendar(2020, Calendar.NOVEMBER, 21),
                 new GregorianCalendar(2020, Calendar.APRIL, 8), 880055536,
                 person, 500, 100, 5);
         agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.NOVEMBER, 22),
                 new GregorianCalendar(2020, Calendar.APRIL, 8), 880055537,
-                person, 100);
+                person, TypeOfSpeed.MBIT, 5.0);
         agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.NOVEMBER, 23),
                 new GregorianCalendar(2020, Calendar.APRIL, 8), 880055538, person, listOfChannel);
         repository.add(agreementOfMobileConnection);
@@ -59,7 +62,7 @@ class RepositoryListTest {
     }
 
     @Test
-    void testGetNonexistentItemFromRepository() {
+    void testGetNonexistentItemFromRepository() throws FoundExistingId {
         repository = new RepositoryList();
         agreementOfMobileConnection = new AgreementOfMobileConnection(new GregorianCalendar(2020, Calendar.NOVEMBER, 21),
                 new GregorianCalendar(2020, Calendar.APRIL, 8), 880055536,
@@ -74,24 +77,24 @@ class RepositoryListTest {
     }
 
     @Test
-    void testGetItemById() throws NotFoundElement, EmptyRepositoryException {
+    void testGetItemById() throws NotFoundElement, EmptyRepositoryException, FoundExistingId {
         repository = new RepositoryList();
         agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
-                person, 100);
+                person, TypeOfSpeed.GBIT, 0.5);
         repository.add(agreementOfWiredInternet);
         Agreement testAgreementOfWiredInternet = repository.getItemById(agreementOfWiredInternet.getId());
         Assertions.assertEquals(agreementOfWiredInternet, testAgreementOfWiredInternet);
     }
 
     @Test
-    void testRemoveItemById() throws NotFoundElement, EmptyRepositoryException {
+    void testRemoveItemById() throws NotFoundElement, EmptyRepositoryException, FoundExistingId {
         repository = new RepositoryList();
         agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
         agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
-                person, 100);
+                person, TypeOfSpeed.BIT, 5696.6);
         repository.add(agreementOfWiredInternet);
         repository.add(agreementOfDigitalTv);
         repository.removeItemById(agreementOfDigitalTv.getId());
@@ -103,7 +106,7 @@ class RepositoryListTest {
     }
 
     @Test
-    void testRemove() throws EmptyRepositoryException {
+    void testRemove() throws EmptyRepositoryException, FoundExistingId {
         repository = new RepositoryList();
         agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
@@ -127,12 +130,24 @@ class RepositoryListTest {
     }
 
     @Test
-    void testLength() {
+    void testLength() throws FoundExistingId {
         repository = new RepositoryList();
         agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
-                person, 100);
+                person, TypeOfSpeed.KBIT, 100.55);
         repository.add(agreementOfWiredInternet);
-        Assertions.assertEquals(repository.length(), 1);
+        Assertions.assertEquals(1, repository.length());
+    }
+    @Test
+    void testItemWithExistingId() throws FoundExistingId {
+        repository = new RepositoryList();
+        agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
+                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
+        repository.add(agreementOfDigitalTv);
+        Exception exception = assertThrows(FoundExistingId.class,
+                () -> repository.add(agreementOfDigitalTv));
+        String expectedMessage = "There is item with existing id";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
     }
 }

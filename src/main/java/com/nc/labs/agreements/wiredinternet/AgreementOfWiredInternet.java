@@ -3,23 +3,22 @@ package com.nc.labs.agreements.wiredinternet;
 import com.nc.labs.agreements.Agreement;
 import com.nc.labs.people.Person;
 
-import java.util.Calendar;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public class AgreementOfWiredInternet extends Agreement {
-    private double connectionSpeed;
+    private Map<TypeOfSpeed, Double> connectionSpeed;
 
     public AgreementOfWiredInternet(Calendar beginning, Calendar end,
-                                    int number, Person owner, double connectionSpeed) {
+                                    int number, Person owner, TypeOfSpeed typeOfSpeed, Double speed) {
         super(beginning, end, number, owner);
-        this.connectionSpeed = connectionSpeed;
+        this.connectionSpeed = new HashMap<>(1);
+        this.connectionSpeed.put(typeOfSpeed,speed);
     }
-    public double getConnectionSpeed() {
+    public Map<TypeOfSpeed, Double> getConnectionSpeed() {
         return connectionSpeed;
     }
 
-    public void setConnectionSpeed(double connectionSpeed) {
+    public void setConnectionSpeed(Map<TypeOfSpeed, Double> connectionSpeed) {
         this.connectionSpeed = connectionSpeed;
     }
 
@@ -27,7 +26,6 @@ public class AgreementOfWiredInternet extends Agreement {
     public Calendar getBeginning() {
         return super.getBeginning();
     }
-
 
     @Override
     public void setBeginning(Calendar beginning) {
@@ -75,7 +73,7 @@ public class AgreementOfWiredInternet extends Agreement {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         AgreementOfWiredInternet that = (AgreementOfWiredInternet) o;
-        return Double.compare(that.connectionSpeed, connectionSpeed) == 0;
+        return connectionSpeed.equals(that.connectionSpeed);
     }
 
     @Override
