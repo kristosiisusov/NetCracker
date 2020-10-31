@@ -6,19 +6,19 @@ import com.nc.labs.people.Person;
 import java.util.*;
 
 public class AgreementOfWiredInternet extends Agreement {
-    private Map<TypeOfSpeed, Double> connectionSpeed;
+    private Speed connectionSpeed;
 
     public AgreementOfWiredInternet(Calendar beginning, Calendar end,
-                                    int number, Person owner, TypeOfSpeed typeOfSpeed, Double speed) {
+                                    int number, Person owner, TypeOfSpeed typeOfSpeed, double speed) {
         super(beginning, end, number, owner);
-        this.connectionSpeed = new HashMap<>(1);
-        this.connectionSpeed.put(typeOfSpeed,speed);
+        this.connectionSpeed = new Speed(typeOfSpeed,speed);
     }
-    public Map<TypeOfSpeed, Double> getConnectionSpeed() {
+
+    public Speed getConnectionSpeed() {
         return connectionSpeed;
     }
 
-    public void setConnectionSpeed(Map<TypeOfSpeed, Double> connectionSpeed) {
+    public void setConnectionSpeed(Speed connectionSpeed) {
         this.connectionSpeed = connectionSpeed;
     }
 
@@ -73,7 +73,7 @@ public class AgreementOfWiredInternet extends Agreement {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         AgreementOfWiredInternet that = (AgreementOfWiredInternet) o;
-        return connectionSpeed.equals(that.connectionSpeed);
+        return Objects.equals(connectionSpeed, that.connectionSpeed);
     }
 
     @Override

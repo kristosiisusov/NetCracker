@@ -7,9 +7,6 @@ import com.nc.labs.agreements.digitaltv.Channel;
 import com.nc.labs.agreements.mobileconnection.AgreementOfMobileConnection;
 import com.nc.labs.agreements.wiredinternet.AgreementOfWiredInternet;
 import com.nc.labs.agreements.wiredinternet.TypeOfSpeed;
-import com.nc.labs.exceptions.EmptyRepositoryException;
-import com.nc.labs.exceptions.FoundExistingId;
-import com.nc.labs.exceptions.NotFoundElement;
 import com.nc.labs.people.Gender;
 import com.nc.labs.people.Person;
 import org.junit.jupiter.api.Assertions;
@@ -19,8 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class RepositoryListTest {
     static Person person;
@@ -40,7 +36,7 @@ class RepositoryListTest {
     }
 
     @Test
-    void testAdd() throws NotFoundElement, EmptyRepositoryException, FoundExistingId {
+    void testAdd() {
         repository = new RepositoryList();
         agreementOfMobileConnection = new AgreementOfMobileConnection(new GregorianCalendar(2020, Calendar.NOVEMBER, 21),
                 new GregorianCalendar(2020, Calendar.APRIL, 8), 880055536,
@@ -53,84 +49,54 @@ class RepositoryListTest {
         repository.add(agreementOfMobileConnection);
         repository.add(agreementOfWiredInternet);
         repository.add(agreementOfDigitalTv);
-        Agreement testAgreement = repository.getItemById(agreementOfWiredInternet.getId());
-        Assertions.assertEquals(agreementOfWiredInternet, testAgreement);
-        testAgreement = repository.getItemById(agreementOfWiredInternet.getId());
-        Assertions.assertEquals(agreementOfWiredInternet, testAgreement);
-        testAgreement = repository.getItemById(agreementOfWiredInternet.getId());
-        Assertions.assertEquals(agreementOfWiredInternet, testAgreement);
+        Assertions.assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
+        Assertions.assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
+        Assertions.assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
     }
 
     @Test
-    void testGetNonexistentItemFromRepository() throws FoundExistingId {
+    void testGetItemById() {
         repository = new RepositoryList();
-        agreementOfMobileConnection = new AgreementOfMobileConnection(new GregorianCalendar(2020, Calendar.NOVEMBER, 21),
-                new GregorianCalendar(2020, Calendar.APRIL, 8), 880055536,
-                person, 500, 100, 5);
-        repository.add(agreementOfMobileConnection);
-        Exception exception = assertThrows(NotFoundElement.class,
-                () -> repository.getItemById(UUID.randomUUID()));
-
-        String expectedMessage = "Item not found in the repository by ID";
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains(expectedMessage));
-    }
-
-    @Test
-    void testGetItemById() throws NotFoundElement, EmptyRepositoryException, FoundExistingId {
-        repository = new RepositoryList();
+        assertNull(repository.getItemById(UUID.randomUUID()));
         agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
                 person, TypeOfSpeed.GBIT, 0.5);
         repository.add(agreementOfWiredInternet);
-        Agreement testAgreementOfWiredInternet = repository.getItemById(agreementOfWiredInternet.getId());
-        Assertions.assertEquals(agreementOfWiredInternet, testAgreementOfWiredInternet);
+        Assertions.assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
     }
 
     @Test
-    void testRemoveItemById() throws NotFoundElement, EmptyRepositoryException, FoundExistingId {
+    void testRemoveItemById() {
         repository = new RepositoryList();
         agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
         agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
-                person, TypeOfSpeed.BIT, 5696.6);
+                person, TypeOfSpeed.GBIT, 0.5);
+        agreementOfMobileConnection = new AgreementOfMobileConnection(new GregorianCalendar(2020, Calendar.NOVEMBER, 21),
+                new GregorianCalendar(2020, Calendar.APRIL, 8), 880055536,
+                person, 500, 100, 5);
         repository.add(agreementOfWiredInternet);
         repository.add(agreementOfDigitalTv);
-        repository.removeItemById(agreementOfDigitalTv.getId());
-        Exception exception = assertThrows(NotFoundElement.class,
-                () -> repository.getItemById(agreementOfDigitalTv.getId()));
-        String expectedMessage = "Item not found in the repository by ID";
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains(expectedMessage));
+        repository.add(agreementOfMobileConnection);
+        assertTrue(repository.removeItemById(agreementOfDigitalTv.getId()));
+        assertNull(repository.getItemById(agreementOfDigitalTv.getId()));
     }
 
     @Test
-    void testRemove() throws EmptyRepositoryException, FoundExistingId {
+    void testRemove() {
         repository = new RepositoryList();
+        assertFalse(repository.remove());
         agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
         repository.add(agreementOfDigitalTv);
-        repository.remove();
-        Exception exception = assertThrows(EmptyRepositoryException.class,
-                () -> repository.remove());
-        String expectedMessage = "Repository is empty";
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains(expectedMessage));
+        assertTrue(repository.remove());
+        assertTrue(repository.isEmpty());
     }
 
-    @Test
-    void testGetItemFromEmptyRepository() {
-        repository = new RepositoryList();
-        Exception exception = assertThrows(EmptyRepositoryException.class,
-                () -> repository.getItemById(UUID.randomUUID()));
-        String expectedMessage = "Repository is empty";
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains(expectedMessage));
-    }
 
     @Test
-    void testLength() throws FoundExistingId {
+    void testLength() {
         repository = new RepositoryList();
         agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
@@ -138,16 +104,5 @@ class RepositoryListTest {
         repository.add(agreementOfWiredInternet);
         Assertions.assertEquals(1, repository.length());
     }
-    @Test
-    void testItemWithExistingId() throws FoundExistingId {
-        repository = new RepositoryList();
-        agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
-        repository.add(agreementOfDigitalTv);
-        Exception exception = assertThrows(FoundExistingId.class,
-                () -> repository.add(agreementOfDigitalTv));
-        String expectedMessage = "There is item with existing id";
-        String actualMessage = exception.getMessage();
-        assertTrue(actualMessage.contains(expectedMessage));
-    }
+
 }

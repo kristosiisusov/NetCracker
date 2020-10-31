@@ -2,18 +2,16 @@ package com.nc.labs.repositories;
 
 
 import com.nc.labs.agreements.Agreement;
-import com.nc.labs.exceptions.EmptyRepositoryException;
-import com.nc.labs.exceptions.FoundExistingId;
-import com.nc.labs.exceptions.NotFoundElement;
 
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
  * expanding repository which hold different kinds of agreement
  */
 public class RepositoryList implements Repository<Agreement> {
-    private int capacity = 2;
+    private int capacity = 10;
     private int occupancy = 0;
     private Agreement[] array;
 
@@ -28,93 +26,82 @@ public class RepositoryList implements Repository<Agreement> {
 
     /**
      * adding new item to the end of repository
+     *
      * @param obj new agreement which would be add to repository
      */
-    public void add(Agreement obj) throws FoundExistingId {
-        if(!searchSameItems(obj.getId())) {
-            if (occupancy >= capacity) {
-                int tempCapacity = capacity * 2;
-                Agreement[] newArray = new Agreement[tempCapacity];
-                if (capacity >= 0) {
-                    System.arraycopy(array, 0, newArray, 0, capacity);
-                }
-                newArray[capacity] = obj;
-                array = newArray;
-                capacity = tempCapacity;
-            } else {
-                array[occupancy] = obj;
-            }
-            occupancy++;
-        } else {
-            throw new FoundExistingId("There is item with existing id");
+    public void add(Agreement obj) {
+        if (occupancy >= capacity) {
+            grow();
         }
+        array[occupancy] = obj;
+        occupancy++;
     }
 
     /**
-     * validation of items before adding to repository for adding only different items
-     * @return true = have found items with similar id
+     * expend repository if there isn't place and copy items to new repository
      */
-    private boolean searchSameItems(UUID id){
-        boolean flag = false;
-        int i = 0;
-        while (i < occupancy && !flag){
-            if((id.compareTo(array[i].getId()) == 0)){
-                flag = true;
-            }
-            i++;
-        }
-        return flag;
+    private void grow() {
+        int tempCapacity = (int) (capacity * 1.5);
+        Agreement[] newArray = new Agreement[tempCapacity];
+        System.arraycopy(array, 0, newArray, 0, capacity);
+        array = newArray;
+        capacity = tempCapacity;
     }
+
     /**
      * removing item of repository by id
+     *
      * @param id identification of each items
      */
-    public void removeItemById(UUID id) throws EmptyRepositoryException, NotFoundElement {
+    public boolean removeItemById(UUID id) {
         int index = getIndexById(id);
-        if ((occupancy - 1) == index) {
-            array[index] = null;
-            occupancy--;
-        } else {
-            for (int i = index; i < occupancy - 1; i++) {
-                array[i] = array[i + 1];
-                occupancy--;
+        if (index >= 0) {
+            if ((occupancy - 1) == index) {
+                array[index] = null;
+            } else {
+                System.arraycopy(array, index + 1, array, index, occupancy - 1);
             }
+            occupancy--;
+            return true;
         }
+        return false;
     }
 
     /**
      * getting item of repository by id
+     * also now all items have own id so can't be items with same id!
+     *
      * @param id identification of each items
      * @return agreement by id
      */
-    public Agreement getItemById(UUID id) throws EmptyRepositoryException, NotFoundElement {
-        return array[getIndexById(id)];
+    public Agreement getItemById(UUID id) {
+        int i = getIndexById(id);
+        if (i >= 0) {
+            return array[i];
+        }
+        return null;
     }
 
     /**
      * utility method which return index of items by their id
+     *
      * @param id identification of each items
      * @return index of item to repository
      */
-    private Integer getIndexById(UUID id) throws EmptyRepositoryException, NotFoundElement {
-        int index;
+    private Integer getIndexById(UUID id) {
+        int index = -1;
         if (occupancy != 0) {
             index = 0;
             while ((index < occupancy) && (array[index].getId().compareTo(id)) != 0) {
                 index++;
             }
-            if ((index < occupancy) && (array[index].getId().compareTo(id)) == 0) {
-                return index;
-            } else {
-                throw new NotFoundElement("Item not found in the repository by ID");
-            }
-        } else {
-            throw new EmptyRepositoryException("Repository is empty");
         }
+        return index;
     }
 
     /**
      * calculating length of repository
+     *
      * @return count of fully items
      */
     public Integer length() {
@@ -125,13 +112,19 @@ public class RepositoryList implements Repository<Agreement> {
      * removing items of repository from the end
      */
     @Override
-    public void remove() throws EmptyRepositoryException {
+    public boolean remove() {
         if (occupancy != 0) {
             array[occupancy - 1] = null;
             occupancy--;
-        } else {
-            throw new EmptyRepositoryException("Repository is empty");
+            return true;
         }
+        return false;
     }
 
+    /**
+     * @return indicates whether or not there are items in the repository
+     */
+    public boolean isEmpty() {
+        return occupancy == 0;
+    }
 }
