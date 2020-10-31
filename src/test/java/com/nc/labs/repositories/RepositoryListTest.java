@@ -9,7 +9,6 @@ import com.nc.labs.agreements.wiredinternet.AgreementOfWiredInternet;
 import com.nc.labs.agreements.wiredinternet.TypeOfSpeed;
 import com.nc.labs.people.Gender;
 import com.nc.labs.people.Person;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -49,20 +48,21 @@ class RepositoryListTest {
         repository.add(agreementOfMobileConnection);
         repository.add(agreementOfWiredInternet);
         repository.add(agreementOfDigitalTv);
-        Assertions.assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
-        Assertions.assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
-        Assertions.assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
+        assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
+        assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
+        assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
     }
 
     @Test
     void testGetItemById() {
         repository = new RepositoryList();
-        assertNull(repository.getItemById(UUID.randomUUID()));
         agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
                 person, TypeOfSpeed.GBIT, 0.5);
         repository.add(agreementOfWiredInternet);
-        Assertions.assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
+        assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
+        assertNull(repository.getItemById(UUID.randomUUID()));
+
     }
 
     @Test
@@ -102,7 +102,7 @@ class RepositoryListTest {
                 new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
                 person, TypeOfSpeed.KBIT, 100.55);
         repository.add(agreementOfWiredInternet);
-        Assertions.assertEquals(1, repository.length());
+        assertEquals(1, repository.length());
     }
 
 }

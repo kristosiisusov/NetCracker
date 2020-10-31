@@ -89,14 +89,16 @@ public class RepositoryList implements Repository<Agreement> {
      * @return index of item to repository
      */
     private Integer getIndexById(UUID id) {
-        int index = -1;
+        int index = 0;
         if (occupancy != 0) {
-            index = 0;
-            while ((index < occupancy) && (array[index].getId().compareTo(id)) != 0) {
+            while (index < occupancy) {
+                if((array[index].getId().compareTo(id)) == 0) {
+                    return index;
+                }
                 index++;
             }
         }
-        return index;
+        return -1;
     }
 
     /**
@@ -114,8 +116,7 @@ public class RepositoryList implements Repository<Agreement> {
     @Override
     public boolean remove() {
         if (occupancy != 0) {
-            array[occupancy - 1] = null;
-            occupancy--;
+            array[--occupancy] = null;
             return true;
         }
         return false;
