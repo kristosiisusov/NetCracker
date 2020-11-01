@@ -23,7 +23,7 @@ class RepositoryListTest {
     Agreement agreementOfDigitalTv;
     Agreement agreementOfMobileConnection;
     Agreement agreementOfWiredInternet;
-    Repository<Agreement> repository;
+    IRepository<Agreement> repository;
 
     @BeforeAll
     static void setUp() {
@@ -49,8 +49,8 @@ class RepositoryListTest {
         repository.add(agreementOfWiredInternet);
         repository.add(agreementOfDigitalTv);
         assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
-        assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
-        assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
+        assertEquals(agreementOfDigitalTv, repository.getItemById(agreementOfDigitalTv.getId()));
+        assertEquals(agreementOfMobileConnection, repository.getItemById(agreementOfMobileConnection.getId()));
     }
 
     @Test
@@ -80,7 +80,12 @@ class RepositoryListTest {
         repository.add(agreementOfDigitalTv);
         repository.add(agreementOfMobileConnection);
         assertTrue(repository.removeItemById(agreementOfDigitalTv.getId()));
+        assertTrue(repository.removeItemById(agreementOfWiredInternet.getId()));
+        assertTrue(repository.removeItemById(agreementOfMobileConnection.getId()));
         assertNull(repository.getItemById(agreementOfDigitalTv.getId()));
+        assertNull(repository.getItemById(agreementOfMobileConnection.getId()));
+        assertNull(repository.getItemById(agreementOfWiredInternet.getId()));
+        assertTrue(repository.isEmpty());
     }
 
     @Test

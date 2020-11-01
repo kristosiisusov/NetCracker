@@ -4,14 +4,13 @@ package com.nc.labs.repositories;
 import com.nc.labs.agreements.Agreement;
 
 
-import java.util.Optional;
 import java.util.UUID;
 
 /**
  * expanding repository which hold different kinds of agreement
  */
-public class RepositoryList implements Repository<Agreement> {
-    private int capacity = 10;
+public class RepositoryList implements IRepository<Agreement> {
+    private static final int capacity = 10;
     private int occupancy = 0;
     private Agreement[] array;
 
@@ -21,7 +20,6 @@ public class RepositoryList implements Repository<Agreement> {
 
     public RepositoryList(int capacity) {
         array = new Agreement[capacity];
-        this.capacity = capacity;
     }
 
     /**
@@ -41,11 +39,9 @@ public class RepositoryList implements Repository<Agreement> {
      * expend repository if there isn't place and copy items to new repository
      */
     private void grow() {
-        int tempCapacity = (int) (capacity * 1.5);
-        Agreement[] newArray = new Agreement[tempCapacity];
-        System.arraycopy(array, 0, newArray, 0, capacity);
+        Agreement[] newArray = new Agreement[(int)(array.length * 1.5)];
+        System.arraycopy(array, 0, newArray, 0, array.length);
         array = newArray;
-        capacity = tempCapacity;
     }
 
     /**
@@ -56,11 +52,8 @@ public class RepositoryList implements Repository<Agreement> {
     public boolean removeItemById(UUID id) {
         int index = getIndexById(id);
         if (index >= 0) {
-            if ((occupancy - 1) == index) {
-                array[index] = null;
-            } else {
-                System.arraycopy(array, index + 1, array, index, occupancy - 1);
-            }
+            System.arraycopy(array, index + 1, array, index, occupancy - index - 1);
+            array[occupancy - 1] = null;
             occupancy--;
             return true;
         }

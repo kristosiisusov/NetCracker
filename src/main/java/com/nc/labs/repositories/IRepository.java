@@ -3,7 +3,7 @@ package com.nc.labs.repositories;
 
 import java.util.UUID;
 
-public interface Repository<T> {
+public interface IRepository<T> {
  void add(T obj);
  boolean removeItemById(UUID id);
  T getItemById(UUID id);
