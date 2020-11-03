@@ -73,4 +73,5 @@ public abstract class Agreement {
     public int hashCode() {
         return Objects.hash(id, beginning, end, number, owner);
     }
+
 }
