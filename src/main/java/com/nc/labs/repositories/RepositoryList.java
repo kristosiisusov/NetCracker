@@ -6,6 +6,7 @@ import com.nc.labs.search.Searcher;
 import com.nc.labs.sorts.ISort;
 
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.UUID;
 import java.util.function.Predicate;
@@ -17,13 +18,26 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
     private static final int capacity = 10;
     private int occupancy = 0;
     private T[] array;
+
     @SuppressWarnings("unchecked")
     public RepositoryList() {
-        array = (T[]) new Agreement[capacity];
+        this.array = (T[]) new Agreement[capacity];
     }
+
     @SuppressWarnings("unchecked")
     public RepositoryList(int capacity) {
-        array = (T[]) new Agreement[capacity];
+        this.array = (T[]) new Agreement[capacity];
+    }
+
+    @SuppressWarnings("unchecked")
+    public RepositoryList(T[] array) {
+        this.array = (T[]) new Agreement[array.length];
+        for (int i = 0; i < array.length; i++) {
+            this.array[i] = array[i];
+            if(array[i] != null){
+                occupancy++;
+            }
+        }
     }
 
     /**
@@ -35,18 +49,19 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
         if (occupancy >= capacity) {
             grow();
         }
-        array[occupancy] = obj;
+        array[occupancy] =  obj;
         occupancy++;
     }
+
 
     /**
      * expend repository if there isn't place and copy items to new repository
      */
+    @SuppressWarnings("unchecked")
     private void grow() {
-        @SuppressWarnings("unchecked")
-        T[] newArray = (T[]) new Agreement[(int)(array.length * 1.5)];
+        Agreement[] newArray =  new Agreement[(int)(array.length * 1.5)];
         System.arraycopy(array, 0, newArray, 0, array.length);
-        array = newArray;
+        array = (T[]) newArray;
     }
 
     /**
@@ -72,7 +87,7 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
      * @param id identification of each items
      * @return agreement by id
      */
-    public Object getItemById(UUID id) {
+    public T getItemById(UUID id) {
         int i = getIndexById(id);
         if (i >= 0) {
             return array[i];
@@ -136,17 +151,21 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
         typeOfSort.sort(array, comparator, occupancy);
     }
 
-    public T[] getArray(){
-        return array;
-    }
-
     /**
      * it find items by predicate
      * @param predicate condition
-     * @return found item
+     * @return repository of found items
      */
-    public T search(Predicate<T> predicate){
+    public IRepository<T> search(Predicate<T> predicate){
         Searcher<T> searcher = new Searcher<>();
-        return searcher.search(array, predicate, occupancy);
+        return new RepositoryList<>(searcher.search(Arrays.copyOf(array,occupancy),predicate));
+    }
+    public T[] toArray(){
+        return array;
+    }
+
+    public T getItemsByIndex(int index){
+        return array[index];
     }
 }
+

@@ -9,12 +9,22 @@ import java.util.function.Predicate;
 
 public interface IRepository<T> {
  void add(T obj);
+
  boolean removeItemById(UUID id);
- Object getItemById(UUID id);
+
+ T getItemById(UUID id);
+
  Integer length();
+
  boolean remove();
+
  boolean isEmpty();
+
  void sort(Comparator<T> comparator, ISort<T> typeOfSort);
- Object[] getArray();
- T search(Predicate<T> predicate);
+
+ IRepository<T> search(Predicate<T> predicate);
+
+ T getItemsByIndex(int index);
+
+ T[] toArray();
 }

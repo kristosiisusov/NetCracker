@@ -10,6 +10,7 @@ import com.nc.labs.agreements.wiredinternet.TypeOfSpeed;
 import com.nc.labs.people.Gender;
 import com.nc.labs.people.Person;
 import com.nc.labs.sorts.BubbleSort;
+import com.nc.labs.sorts.SelectionSort;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -125,10 +126,14 @@ class RepositoryListTest {
         repository.add(agreementOfDigitalTv);
         repository.add(agreementOfMobileConnection);
         repository.add(agreementOfWiredInternet);
-        repository.sort((x,y) -> x.getNumber() - y.getNumber(), new BubbleSort());
-        assertEquals(agreementOfMobileConnection, repository.getArray()[0]);
-        assertEquals(agreementOfWiredInternet, repository.getArray()[1]);
-        assertEquals(agreementOfDigitalTv, repository.getArray()[2]);
+        Comparator<Agreement> comparator = (x,y) -> x.getNumber() - y.getNumber();
+        IRepository<Agreement> repository1 = new RepositoryList<>(repository.toArray());
+        repository.sort(comparator, new SelectionSort());
+        repository1.sort(comparator, new BubbleSort());
+        for (int i = 0; i < repository.length() - 1; i++) {
+            assertTrue((comparator.compare(repository.getItemsByIndex(i), repository.getItemsByIndex(i + 1)) < 0));
+            assertTrue((comparator.compare(repository1.getItemsByIndex(i), repository1.getItemsByIndex(i + 1)) < 0));
+        }
     }
     @Test
     void  search(){
@@ -144,6 +149,10 @@ class RepositoryListTest {
         repository.add(agreementOfDigitalTv);
         repository.add(agreementOfMobileConnection);
         repository.add(agreementOfWiredInternet);
-        assertEquals(repository.search((x) -> x.getNumber() > 880055537), agreementOfDigitalTv);
+        IRepository<Agreement> foundItems;
+        foundItems = repository.search((x) -> x.getNumber() > 880055536);
+        for (int i = 0; i < foundItems.length(); i++) {
+            assertTrue(foundItems.getItemsByIndex(i).getNumber() >880055536);
+        }
     }
 }
