@@ -3,6 +3,7 @@ package com.nc.labs.repositories;
 
 import com.nc.labs.agreements.Agreement;
 import com.nc.labs.search.Searcher;
+import com.nc.labs.sorts.BubbleSort;
 import com.nc.labs.sorts.ISort;
 
 
@@ -18,15 +19,18 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
     private static final int capacity = 10;
     private int occupancy = 0;
     private T[] array;
+    private ISort<T> typeOfSort;
 
     @SuppressWarnings("unchecked")
     public RepositoryList() {
         this.array = (T[]) new Agreement[capacity];
+        typeOfSort = new BubbleSort<>();
     }
 
     @SuppressWarnings("unchecked")
     public RepositoryList(int capacity) {
         this.array = (T[]) new Agreement[capacity];
+        typeOfSort = new BubbleSort<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -38,6 +42,15 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
                 occupancy++;
             }
         }
+        typeOfSort = new BubbleSort<>();
+    }
+
+    public ISort<T> getTypeOfSort() {
+        return typeOfSort;
+    }
+
+    public void setTypeOfSort(ISort<T> typeOfSort) {
+        this.typeOfSort = typeOfSort;
     }
 
     /**
@@ -147,7 +160,7 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
      * @param comparator getting expression to compare different items
      * and calls methods sort of ISort to sort items with defined sorting like Bubble sort etc
      */
-    public void sort(Comparator<T> comparator, ISort<T> typeOfSort){
+    public void sort(Comparator<T> comparator){
         typeOfSort.sort(array, comparator, occupancy);
     }
 

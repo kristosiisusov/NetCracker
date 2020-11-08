@@ -128,8 +128,11 @@ class RepositoryListTest {
         repository.add(agreementOfWiredInternet);
         Comparator<Agreement> comparator = (x,y) -> x.getNumber() - y.getNumber();
         IRepository<Agreement> repository1 = new RepositoryList<>(repository.toArray());
-        repository.sort(comparator, new SelectionSort());
-        repository1.sort(comparator, new BubbleSort());
+        repository.sort(comparator);
+        if(repository1.getTypeOfSort().getClass() == BubbleSort.class) {
+            repository1.setTypeOfSort(new SelectionSort<>());
+            repository1.sort(comparator);
+        }
         for (int i = 0; i < repository.length() - 1; i++) {
             assertTrue((comparator.compare(repository.getItemsByIndex(i), repository.getItemsByIndex(i + 1)) < 0));
             assertTrue((comparator.compare(repository1.getItemsByIndex(i), repository1.getItemsByIndex(i + 1)) < 0));

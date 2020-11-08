@@ -1,7 +1,8 @@
 package com.nc.labs.repositories;
 
-import com.nc.labs.sorts.ISort;
 
+
+import com.nc.labs.sorts.ISort;
 
 import java.util.Comparator;
 import java.util.UUID;
@@ -20,11 +21,15 @@ public interface IRepository<T> {
 
  boolean isEmpty();
 
- void sort(Comparator<T> comparator, ISort<T> typeOfSort);
+ void sort(Comparator<T> comparator);
 
  IRepository<T> search(Predicate<T> predicate);
 
  T getItemsByIndex(int index);
 
  T[] toArray();
+
+ void setTypeOfSort(ISort<T> typeOfSort);
+
+ ISort<T> getTypeOfSort();
 }
