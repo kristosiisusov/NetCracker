@@ -5,7 +5,7 @@ package com.nc.labs.agreements.mobileconnection;
 import com.nc.labs.agreements.Agreement;
 import com.nc.labs.people.Person;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,7 +14,11 @@ public class AgreementOfMobileConnection extends Agreement {
     private int countOfSms;
     private int countOfGbTraffic;
 
-    public AgreementOfMobileConnection(Calendar beginning, Calendar end, int number, Person owner,
+    public AgreementOfMobileConnection() {
+
+    }
+
+    public AgreementOfMobileConnection(LocalDate beginning, LocalDate end, int number, Person owner,
                                        int countOfMinutes, int countOfSms, int countOfGbTraffic) {
         super(beginning, end, number, owner);
         this.countOfMinutes = countOfMinutes;
@@ -47,12 +51,12 @@ public class AgreementOfMobileConnection extends Agreement {
     }
 
     @Override
-    public Calendar getBeginning() {
+    public LocalDate getBeginning() {
         return super.getBeginning();
     }
 
     @Override
-    public void setBeginning(Calendar beginning) {
+    public void setBeginning(LocalDate beginning) {
         super.setBeginning(beginning);
     }
 
@@ -62,7 +66,7 @@ public class AgreementOfMobileConnection extends Agreement {
     }
 
     @Override
-    public Calendar getEnd() {
+    public LocalDate getEnd() {
         return super.getEnd();
     }
 
@@ -77,7 +81,7 @@ public class AgreementOfMobileConnection extends Agreement {
     }
 
     @Override
-    public void setEnd(Calendar end) {
+    public void setEnd(LocalDate end) {
         super.setEnd(end);
     }
 

@@ -3,12 +3,17 @@ package com.nc.labs.agreements.wiredinternet;
 import com.nc.labs.agreements.Agreement;
 import com.nc.labs.people.Person;
 
+import java.time.LocalDate;
 import java.util.*;
 
 public class AgreementOfWiredInternet extends Agreement {
     private Speed connectionSpeed;
 
-    public AgreementOfWiredInternet(Calendar beginning, Calendar end,
+    public AgreementOfWiredInternet() {
+
+    }
+
+    public AgreementOfWiredInternet(LocalDate beginning, LocalDate end,
                                     int number, Person owner, TypeOfSpeed typeOfSpeed, double speed) {
         super(beginning, end, number, owner);
         this.connectionSpeed = new Speed(typeOfSpeed,speed);
@@ -23,12 +28,12 @@ public class AgreementOfWiredInternet extends Agreement {
     }
 
     @Override
-    public Calendar getBeginning() {
+    public LocalDate getBeginning() {
         return super.getBeginning();
     }
 
     @Override
-    public void setBeginning(Calendar beginning) {
+    public void setBeginning(LocalDate beginning) {
         super.setBeginning(beginning);
     }
 
@@ -38,7 +43,7 @@ public class AgreementOfWiredInternet extends Agreement {
     }
 
     @Override
-    public Calendar getEnd() {
+    public LocalDate getEnd() {
         return super.getEnd();
     }
 
@@ -53,7 +58,7 @@ public class AgreementOfWiredInternet extends Agreement {
     }
 
     @Override
-    public void setEnd(Calendar end) {
+    public void setEnd(LocalDate end) {
         super.setEnd(end);
     }
 
