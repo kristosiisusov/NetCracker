@@ -40,14 +40,14 @@ class RepositoryListTest {
     @Test
     void testAdd() {
         repository = new RepositoryList<>();
-        agreementOfMobileConnection = new AgreementOfMobileConnection(new GregorianCalendar(2020, Calendar.NOVEMBER, 21),
-                new GregorianCalendar(2020, Calendar.APRIL, 8), 880055536,
+        agreementOfMobileConnection = new AgreementOfMobileConnection(LocalDate.of(2020,11, 21),
+                LocalDate.of(2020, 4, 8), 880055536,
                 person, 500, 100, 5);
-        agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.NOVEMBER, 22),
-                new GregorianCalendar(2020, Calendar.APRIL, 8), 880055537,
+        agreementOfWiredInternet = new AgreementOfWiredInternet(LocalDate.of(2020,11, 22),
+                LocalDate.of(2020, 4, 8), 880055537,
                 person, TypeOfSpeed.MBIT, 5.0);
-        agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.NOVEMBER, 23),
-                new GregorianCalendar(2020, Calendar.APRIL, 8), 880055538, person, listOfChannel);
+        agreementOfDigitalTv = new AgreementOfDigitalTv(LocalDate.of(2020,11, 23),
+                LocalDate.of(2020, 4, 8), 880055538, person, listOfChannel);
         repository.add(agreementOfMobileConnection);
         repository.add(agreementOfWiredInternet);
         repository.add(agreementOfDigitalTv);
@@ -59,8 +59,8 @@ class RepositoryListTest {
     @Test
     void testGetItemById() {
         repository = new RepositoryList<>();
-        agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
+        agreementOfWiredInternet = new AgreementOfWiredInternet(LocalDate.of(2020, 4, 22),
+                LocalDate.of(2020, 12, 8), 880055537,
                 person, TypeOfSpeed.GBIT, 0.5);
         repository.add(agreementOfWiredInternet);
         assertEquals(agreementOfWiredInternet, repository.getItemById(agreementOfWiredInternet.getId()));
@@ -71,13 +71,13 @@ class RepositoryListTest {
     @Test
     void testRemoveItemById() {
         repository = new RepositoryList<>();
-        agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
-        agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
+        agreementOfDigitalTv = new AgreementOfDigitalTv(LocalDate.of(2020, 4, 23),
+                LocalDate.of(2020, 12, 8), 880055538, person, listOfChannel);
+        agreementOfWiredInternet = new AgreementOfWiredInternet(LocalDate.of(2020, 4, 22),
+                LocalDate.of(2020, 12, 8), 880055537,
                 person, TypeOfSpeed.GBIT, 0.5);
-        agreementOfMobileConnection = new AgreementOfMobileConnection(new GregorianCalendar(2020, Calendar.NOVEMBER, 21),
-                new GregorianCalendar(2020, Calendar.APRIL, 8), 880055536,
+        agreementOfMobileConnection = new AgreementOfMobileConnection(LocalDate.of(2020, 11, 21),
+                LocalDate.of(2020, 4, 8), 880055536,
                 person, 500, 100, 5);
         repository.add(agreementOfWiredInternet);
         repository.add(agreementOfDigitalTv);
@@ -95,8 +95,8 @@ class RepositoryListTest {
     void testRemove() {
         repository = new RepositoryList<>();
         assertFalse(repository.remove());
-        agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
+        agreementOfDigitalTv = new AgreementOfDigitalTv(LocalDate.of(2020,4, 23),
+                LocalDate.of(2020, 12, 8), 880055538, person, listOfChannel);
         repository.add(agreementOfDigitalTv);
         assertTrue(repository.remove());
         assertTrue(repository.isEmpty());
@@ -106,8 +106,8 @@ class RepositoryListTest {
     @Test
     void testLength() {
         repository = new RepositoryList<>();
-        agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
+        agreementOfWiredInternet = new AgreementOfWiredInternet(LocalDate.of(2020, 4, 22),
+                LocalDate.of(2020, 12, 8), 880055537,
                 person, TypeOfSpeed.KBIT, 100.55);
         repository.add(agreementOfWiredInternet);
         assertEquals(1, repository.length());
@@ -115,13 +115,13 @@ class RepositoryListTest {
     @Test
     void sort(){
         repository = new RepositoryList<>();
-        agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
-        agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
+        agreementOfDigitalTv = new AgreementOfDigitalTv(LocalDate.of(2020, 4, 23),
+                LocalDate.of(2020, 12, 8), 880055538, person, listOfChannel);
+        agreementOfWiredInternet = new AgreementOfWiredInternet(LocalDate.of(2020, 4, 22),
+                LocalDate.of(2020, 12, 8), 880055537,
                 person, TypeOfSpeed.GBIT, 0.5);
-        agreementOfMobileConnection = new AgreementOfMobileConnection(new GregorianCalendar(2020, Calendar.NOVEMBER, 21),
-                new GregorianCalendar(2020, Calendar.APRIL, 8), 880055536,
+        agreementOfMobileConnection = new AgreementOfMobileConnection(LocalDate.of(2020, 11, 21),
+                LocalDate.of(2020, 4, 8), 880055536,
                 person, 500, 100, 5);
         repository.add(agreementOfDigitalTv);
         repository.add(agreementOfMobileConnection);
@@ -141,13 +141,13 @@ class RepositoryListTest {
     @Test
     void  search(){
         repository = new RepositoryList<>();
-        agreementOfDigitalTv = new AgreementOfDigitalTv(new GregorianCalendar(2020, Calendar.APRIL, 23),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055538, person, listOfChannel);
-        agreementOfWiredInternet = new AgreementOfWiredInternet(new GregorianCalendar(2020, Calendar.APRIL, 22),
-                new GregorianCalendar(2020, Calendar.DECEMBER, 8), 880055537,
+        agreementOfDigitalTv = new AgreementOfDigitalTv(LocalDate.of(2020, 4, 23),
+                LocalDate.of(2020, 12, 8), 880055538, person, listOfChannel);
+        agreementOfWiredInternet = new AgreementOfWiredInternet(LocalDate.of(2020, 4, 22),
+                LocalDate.of(2020, 12, 8), 880055537,
                 person, TypeOfSpeed.GBIT, 0.5);
-        agreementOfMobileConnection = new AgreementOfMobileConnection(new GregorianCalendar(2020, Calendar.NOVEMBER, 21),
-                new GregorianCalendar(2020, Calendar.APRIL, 8), 880055536,
+        agreementOfMobileConnection = new AgreementOfMobileConnection(LocalDate.of(2020, 11, 21),
+                LocalDate.of(2020, 4, 8), 880055536,
                 person, 500, 100, 5);
         repository.add(agreementOfDigitalTv);
         repository.add(agreementOfMobileConnection);
@@ -155,7 +155,7 @@ class RepositoryListTest {
         IRepository<Agreement> foundItems;
         foundItems = repository.search((x) -> x.getNumber() > 880055536);
         for (int i = 0; i < foundItems.length(); i++) {
-            assertTrue(foundItems.getItemsByIndex(i).getNumber() >880055536);
+            assertTrue(foundItems.getItemsByIndex(i).getNumber() > 880055536);
         }
     }
 }

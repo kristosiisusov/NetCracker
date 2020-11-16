@@ -1,7 +1,7 @@
 package com.nc.labs.agreements.digitaltv;
 
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -12,7 +12,11 @@ import com.nc.labs.people.Person;
 public class AgreementOfDigitalTv extends Agreement {
     private List<Channel> packageOfChannel;
 
-    public AgreementOfDigitalTv(Calendar beginning, Calendar end,
+    public AgreementOfDigitalTv() {
+
+    }
+
+    public AgreementOfDigitalTv(LocalDate beginning, LocalDate end,
                                 int number, Person owner, List<Channel> packageOfChannel) {
         super(beginning, end, number, owner);
         this.packageOfChannel = packageOfChannel;
@@ -27,12 +31,12 @@ public class AgreementOfDigitalTv extends Agreement {
     }
 
     @Override
-    public Calendar getBeginning() {
+    public LocalDate getBeginning() {
         return super.getBeginning();
     }
 
     @Override
-    public void setBeginning(Calendar beginning) {
+    public void setBeginning(LocalDate beginning) {
         super.setBeginning(beginning);
     }
 
@@ -42,7 +46,7 @@ public class AgreementOfDigitalTv extends Agreement {
     }
 
     @Override
-    public Calendar getEnd() {
+    public LocalDate getEnd() {
         return super.getEnd();
     }
 
@@ -57,7 +61,7 @@ public class AgreementOfDigitalTv extends Agreement {
     }
 
     @Override
-    public void setEnd(Calendar end) {
+    public void setEnd(LocalDate end) {
         super.setEnd(end);
     }
 

@@ -4,6 +4,7 @@ package com.nc.labs.people;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 import java.util.UUID;
 
 public class Person {
@@ -31,10 +32,18 @@ public class Person {
         this.passport = new Passport(seriesOfPassport,numberOfPassport);
     }
 
+    public Passport getPassport() {
+        return passport;
+    }
+
+    public void setPassport(Passport passport) {
+        this.passport = passport;
+    }
+
     /**
      * class to store the data from person's passport
      */
-    private class Passport{
+    public class Passport{
         private int seriesOfPassport;
         private int numberOfPassport;
 
@@ -58,6 +67,20 @@ public class Person {
 
         public void setNumberOfPassport(int numberOfPassport) {
             this.numberOfPassport = numberOfPassport;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Passport passport = (Passport) o;
+            return seriesOfPassport == passport.seriesOfPassport &&
+                    numberOfPassport == passport.numberOfPassport;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(seriesOfPassport, numberOfPassport);
         }
     }
 
@@ -120,5 +143,24 @@ public class Person {
 
     public void setAge(LocalDate birthdate) {
         this.age = calculateAge(birthdate);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return age == person.age &&
+                Objects.equals(lastName, person.lastName) &&
+                Objects.equals(firstName, person.firstName) &&
+                Objects.equals(middleName, person.middleName) &&
+                Objects.equals(birthdate, person.birthdate) &&
+                gender == person.gender &&
+                Objects.equals(passport, person.passport);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lastName, firstName, middleName, birthdate, gender, age, passport);
     }
 }

@@ -1,0 +1,4 @@
+ДатаНачалаКонтракта;ДатаКонцаКонтракта;НомерКонтракта;Фамилия;Имя;Отчество;ДатаРождения;ПолКлиента;СерияПаспорта;НомерПаспорта;ТипКонтракта;ДопИнформацияПоКонтракту
+2018-12-27;2021-12-27;880055538;Watson;Emma;Charlotte;2018-12-27;FEMALE;2002;123456;AgreementOfDigitalTv;TestFirstChannel
+2018-12-27;2021-12-27;880055539;Watson;Emma;Charlotte;2018-12-27;FEMALE;2002;123456;AgreementOfMobileConnection;60,1000,2
+2018-12-27;2021-12-27;880055539;Watson;Emma;Charlotte;2018-12-27;FEMALE;2004;789567;AgreementOfWiredInternet;MBIT,50.0

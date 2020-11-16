@@ -2,18 +2,21 @@ package com.nc.labs.agreements;
 
 import com.nc.labs.people.Person;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
 public abstract class Agreement {
     private UUID id;
-    private Calendar beginning;
-    private Calendar end;
+    private LocalDate beginning;
+    private LocalDate end;
     private int number;
     private Person owner;
 
-    public Agreement(Calendar beginning, Calendar end, int number, Person owner) {
+    public Agreement() {
+    }
+
+    public Agreement(LocalDate beginning, LocalDate end, int number, Person owner) {
         this.id = UUID.randomUUID();
         this.beginning = beginning;
         this.end = end;
@@ -21,11 +24,11 @@ public abstract class Agreement {
         this.owner = owner;
     }
 
-    public Calendar getBeginning() {
+    public LocalDate getBeginning() {
         return beginning;
     }
 
-    public void setBeginning(Calendar beginning) {
+    public void setBeginning(LocalDate beginning) {
         this.beginning = beginning;
     }
 
@@ -33,7 +36,7 @@ public abstract class Agreement {
         return id;
     }
 
-    public Calendar getEnd() {
+    public LocalDate getEnd() {
         return end;
     }
 
@@ -45,7 +48,7 @@ public abstract class Agreement {
         return owner;
     }
 
-    public void setEnd(Calendar end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 
@@ -63,7 +66,6 @@ public abstract class Agreement {
         if (o == null || getClass() != o.getClass()) return false;
         Agreement agreement = (Agreement) o;
         return number == agreement.number &&
-                Objects.equals(id, agreement.id) &&
                 Objects.equals(beginning, agreement.beginning) &&
                 Objects.equals(end, agreement.end) &&
                 Objects.equals(owner, agreement.owner);
@@ -71,7 +73,6 @@ public abstract class Agreement {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, beginning, end, number, owner);
+        return Objects.hash(beginning, end, number, owner);
     }
-
 }

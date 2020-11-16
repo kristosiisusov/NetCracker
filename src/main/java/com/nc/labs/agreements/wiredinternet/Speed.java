@@ -1,5 +1,7 @@
 package com.nc.labs.agreements.wiredinternet;
 
+import java.util.Objects;
+
 public class Speed {
     TypeOfSpeed typeOfSpeed;
     double value;
@@ -23,5 +25,19 @@ public class Speed {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Speed speed = (Speed) o;
+        return Double.compare(speed.value, value) == 0 &&
+                typeOfSpeed == speed.typeOfSpeed;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(typeOfSpeed, value);
     }
 }
