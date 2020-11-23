@@ -10,6 +10,8 @@ import com.nc.labs.agreements.wiredinternet.TypeOfSpeed;
 import com.nc.labs.people.Gender;
 import com.nc.labs.people.Person;
 import com.nc.labs.repositories.IRepository;
+import com.nc.labs.validation.IValidator;
+import com.nc.labs.validation.ValidationResult;
 import com.opencsv.*;
 
 import java.io.File;
@@ -21,16 +23,29 @@ import java.util.List;
 import java.util.Map;
 
 public class AgreementFactory {
-    private static List<Person> people = new ArrayList<>();
+    private List<Person> people = new ArrayList<>();
+    IRepository<Agreement> repository;
+    File file;
+    IValidator<Agreement> validator;
+
+    public AgreementFactory(IRepository<Agreement> repository, File file, IValidator<Agreement> validator) {
+        this.repository = repository;
+        this.file = file;
+        this.validator = validator;
+    }
+
+    public AgreementFactory(IRepository<Agreement> repository, File file) {
+        this.repository = repository;
+        this.file = file;
+    }
 
     /**
      * to create new repository with agreements, created from file
-     * @param repository of agreement
-     * @param file of data with agreements
+     *
      * @return new repository with agreements, created from file
      * @throws Exception
      */
-    public static IRepository create(IRepository repository, File file) throws Exception {
+    public IRepository<Agreement> create() throws Exception {
         CSVReaderHeaderAwareBuilder csvReaderHeaderAwareBuilder = new CSVReaderHeaderAwareBuilder
                 (new FileReader(file, StandardCharsets.UTF_8));
         csvReaderHeaderAwareBuilder.withCSVParser(new CSVParserBuilder().withSeparator(';').build());
@@ -68,17 +83,32 @@ public class AgreementFactory {
             agreement.setOwner(getPerson(new Person(stringMap.get("Фамилия"), stringMap.get("Имя"), stringMap.get("Отчество"),
                     LocalDate.parse(stringMap.get("ДатаРождения")), Gender.valueOf(stringMap.get("ПолКлиента")), Integer.parseInt(stringMap.get("СерияПаспорта")),
                     Integer.parseInt(stringMap.get("НомерПаспорта")))));
-            repository.add(agreement);
+            if (validator != null) {
+                boolean status = true;
+                List<ValidationResult> validationResults = validator.validate(agreement);
+                int i = 0;
+                while (i < validationResults.size() && status) {
+                    status = validationResults.get(i).isResult();
+                    System.out.println(agreement.toString() + ":" + validationResults.get(i).getMessageInfo());
+                    i++;
+                }
+                if (status) {
+                    repository.add(agreement);
+                }
+            } else {
+                repository.add(agreement);
+            }
         }
         return repository;
     }
 
     /**
      * to return existing Person and to delete created Person or to to return created Person
+     *
      * @param tempPerson created Person
      * @return existing Person
      */
-    private static Person getPerson(Person tempPerson) {
+    private Person getPerson(Person tempPerson) {
         int index = checkSimilarPerson(tempPerson.getPassport().getSeriesOfPassport(), tempPerson.getPassport().getNumberOfPassport());
         if (index == -1) {
             people.add(tempPerson);
@@ -90,11 +120,12 @@ public class AgreementFactory {
 
     /**
      * checks the existence of an object with unique data
+     *
      * @param series Of Person's Passport
      * @param number Of Person's Passport
      * @return -1 if there isn't Person with agreement else return Person's index
      */
-    private static int checkSimilarPerson(int series, int number) {
+    private int checkSimilarPerson(int series, int number) {
         int i = 0;
         if (people.size() != 0) {
             while (i < people.size()) {

@@ -25,7 +25,7 @@ class AgreementFactoryTest {
         LocalDate birthday = LocalDate.of(2018, 12, 27);
         Person person = new Person("Watson", "Emma", "Charlotte",
                 birthday, Gender.FEMALE, 2002, 123456);
-        List listOfChannel = new ArrayList();
+        List<Channel> listOfChannel = new ArrayList<>();
         listOfChannel.add(new Channel("TestFirstChannel"));
         Agreement agreementOfDigitalTv  = new AgreementOfDigitalTv(LocalDate.of(2018,12, 27),
                 LocalDate.of(2021, 12, 27), 880055538, person, listOfChannel);
@@ -41,7 +41,8 @@ class AgreementFactoryTest {
         repositoryObj.add(agreementOfMobileConnection);
         repositoryObj.add(agreementOfWiredInternet);
         IRepository<Agreement> repositoryFromFile;
-        repositoryFromFile = AgreementFactory.create(new RepositoryList<>(), new File("src/test/java/resources/Data.csv"));
+        AgreementFactory agreementFactory = new AgreementFactory(new RepositoryList<>(), new File("src/test/java/resources/Data.csv"));
+        repositoryFromFile = agreementFactory.create();
         for (int i = 0; i < repositoryFromFile.length(); i++) {
             assertEquals(repositoryFromFile.getItemsByIndex(i),repositoryObj.getItemsByIndex(i));
         }
