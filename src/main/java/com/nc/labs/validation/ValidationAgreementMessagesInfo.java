@@ -8,6 +8,10 @@ import org.apache.commons.collections.ListUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * sets the necessary templates for logging depending on the method
+ * @param <T>
+ */
 public class ValidationAgreementMessagesInfo<T> {
     private List<Condition<T>> conditions = new ArrayList<>();
 

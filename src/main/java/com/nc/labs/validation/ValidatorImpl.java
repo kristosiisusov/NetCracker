@@ -3,7 +3,10 @@ package com.nc.labs.validation;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * implementation of validation with messages for logging validation
+ * @param <T>
+ */
 public class ValidatorImpl<T> implements IValidator<T> {
 
     private List<Condition<T>> conditions;
@@ -11,6 +14,12 @@ public class ValidatorImpl<T> implements IValidator<T> {
     public ValidatorImpl(List<Condition<T>> conditions) {
         this.conditions = conditions;
     }
+
+    /**
+     *
+     * @param param value to check
+     * @return list of results obtained by applying the condition
+     */
 
     @Override
     public List<ValidationResult> validate(T param) {

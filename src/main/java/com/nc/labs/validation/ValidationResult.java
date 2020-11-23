@@ -1,5 +1,8 @@
 package com.nc.labs.validation;
 
+/**
+ * stores the status of the check for the condition: passed or failed, and a message depending on the result
+ */
 public class ValidationResult {
     private String messageInfo;
     private boolean result;
@@ -16,7 +19,6 @@ public class ValidationResult {
     public boolean isResult() {
         return result;
     }
-
     public static ValidationResult correct(String message){
         return new ValidationResult(true, message);
     }

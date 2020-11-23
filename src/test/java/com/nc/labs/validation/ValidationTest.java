@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ValidationTest {
     @Test
-    void validate() throws Exception {
+    void testValidate() throws Exception {
         LocalDate birthday = LocalDate.of(2018, 12, 27);
         Person person = new Person("Watson", "Emma", "Charlotte",
                 birthday, Gender.FEMALE, 2002, 123456);

@@ -3,6 +3,10 @@ package com.nc.labs.validation;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ *stores successful and unsuccessful messages, criteria of the condition, the parameter to which the condition with criteria was applied
+ * @param <T>
+ */
 public class Condition<T> {
     private List<String> criterion;
     private Predicate<T> predicate;

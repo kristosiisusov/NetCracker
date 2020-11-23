@@ -113,7 +113,7 @@ class RepositoryListTest {
         assertEquals(1, repository.length());
     }
     @Test
-    void sort(){
+    void testSort(){
         repository = new RepositoryList<>();
         agreementOfDigitalTv = new AgreementOfDigitalTv(LocalDate.of(2020, 4, 23),
                 LocalDate.of(2020, 12, 8), 880055538, person, listOfChannel);
@@ -139,7 +139,7 @@ class RepositoryListTest {
         }
     }
     @Test
-    void  search(){
+    void  testSearch(){
         repository = new RepositoryList<>();
         agreementOfDigitalTv = new AgreementOfDigitalTv(LocalDate.of(2020, 4, 23),
                 LocalDate.of(2020, 12, 8), 880055538, person, listOfChannel);
