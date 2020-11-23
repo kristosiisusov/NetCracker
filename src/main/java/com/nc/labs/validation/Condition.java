@@ -6,7 +6,8 @@ import java.util.function.Predicate;
 public class Condition<T> {
     private List<String> criterion;
     private Predicate<T> predicate;
-    private String messageInfo;
+    private String messageInfoSuccess;
+    private String messageInfoError;
     private String param;
 
     public Condition(List<String> criterion, Predicate<T> predicate, String param) {
@@ -39,11 +40,19 @@ public class Condition<T> {
         this.predicate = predicate;
     }
 
-    public String getMessageInfo() {
-        return messageInfo;
+    public String getMessageInfoSuccess() {
+        return messageInfoSuccess;
     }
 
-    public void setMessageInfo(String messageInfo) {
-        this.messageInfo = messageInfo;
+    public String getMessageInfoError() {
+        return messageInfoError;
+    }
+
+    public void setMessageInfoSuccess(String messageInfoSuccess) {
+        this.messageInfoSuccess = messageInfoSuccess;
+    }
+
+    public void setMessageInfoError(String messageInfoError) {
+        this.messageInfoError = messageInfoError;
     }
 }

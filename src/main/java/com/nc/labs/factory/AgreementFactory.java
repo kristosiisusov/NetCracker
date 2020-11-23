@@ -14,6 +14,7 @@ import com.nc.labs.validation.IValidator;
 import com.nc.labs.validation.ValidationResult;
 import com.opencsv.*;
 
+
 import java.io.File;
 import java.io.FileReader;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class AgreementFactory {
+    private static final Logger logger = LoggerFactory.getLogger(AgreementFactory.class);
     private List<Person> people = new ArrayList<>();
     IRepository<Agreement> repository;
     File file;
@@ -89,7 +93,7 @@ public class AgreementFactory {
                 int i = 0;
                 while (i < validationResults.size() && status) {
                     status = validationResults.get(i).isResult();
-                    System.out.println(agreement.toString() + ":" + validationResults.get(i).getMessageInfo());
+                    logger.info(agreement.toString() + ":" + validationResults.get(i).getMessageInfo());
                     i++;
                 }
                 if (status) {

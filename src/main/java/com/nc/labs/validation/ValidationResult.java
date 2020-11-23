@@ -17,8 +17,8 @@ public class ValidationResult {
         return result;
     }
 
-    public static ValidationResult correct(){
-        return new ValidationResult(true, "Validation is success");
+    public static ValidationResult correct(String message){
+        return new ValidationResult(true, message);
     }
 
     public static ValidationResult uncorrected(String message){

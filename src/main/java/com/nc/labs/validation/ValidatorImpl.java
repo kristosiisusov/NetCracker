@@ -16,7 +16,7 @@ public class ValidatorImpl<T> implements IValidator<T> {
     public List<ValidationResult> validate(T param) {
         List<ValidationResult> validationResults = new ArrayList<>();
         for (Condition<T> condition : conditions) {
-            validationResults.add(condition.getPredicate().test(param) ? ValidationResult.correct() : ValidationResult.uncorrected(condition.getMessageInfo()));
+            validationResults.add(condition.getPredicate().test(param) ? ValidationResult.correct(condition.getMessageInfoSuccess()) : ValidationResult.uncorrected(condition.getMessageInfoError()));
         }
         return validationResults;
     }
