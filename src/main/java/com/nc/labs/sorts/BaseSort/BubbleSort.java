@@ -1,8 +1,11 @@
-package com.nc.labs.sorts;
+package com.nc.labs.sorts.BaseSort;
+
+import com.nc.labs.sorts.ISort;
 
 import java.util.Comparator;
 
-public class BubbleSort<T> implements ISort<T>{
+public class BubbleSort<T> implements ISort<T> {
+
     @Override
     public void sort(T[] array, Comparator<T> c, int length) {
         for (int i = 0; i < length; i++) {

@@ -9,7 +9,7 @@ import com.nc.labs.agreements.wiredinternet.AgreementOfWiredInternet;
 import com.nc.labs.agreements.wiredinternet.TypeOfSpeed;
 import com.nc.labs.people.Gender;
 import com.nc.labs.people.Person;
-import com.nc.labs.sorts.BubbleSort;
+import com.nc.labs.sorts.BaseSort.BubbleSort;
 import com.nc.labs.sorts.SelectionSort;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

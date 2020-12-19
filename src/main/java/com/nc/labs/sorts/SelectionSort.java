@@ -3,6 +3,7 @@ package com.nc.labs.sorts;
 import java.util.Comparator;
 
 public class SelectionSort<T> implements ISort<T> {
+
     public void sort(T[] array, Comparator<T> comparator, int length) {
         for (int i = 0; i < length - 1; i++) {
             int minIndex = i;
