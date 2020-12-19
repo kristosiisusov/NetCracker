@@ -23,10 +23,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 public class AgreementFactory {
-    private static final Logger logger = LoggerFactory.getLogger(AgreementFactory.class);
     private List<Person> people = new ArrayList<>();
     IRepository<Agreement> repository;
     File file;
@@ -93,7 +92,7 @@ public class AgreementFactory {
                 int i = 0;
                 while (i < validationResults.size() && status) {
                     status = validationResults.get(i).isResult();
-                    logger.info(agreement.toString() + ":" + validationResults.get(i).getMessageInfo());
+                    log.info(agreement.toString() + ":" + validationResults.get(i).getMessageInfo());
                     i++;
                 }
                 if (status) {

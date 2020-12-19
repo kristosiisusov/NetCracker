@@ -2,12 +2,13 @@ package com.nc.labs.repositories;
 
 
 import com.nc.labs.agreements.Agreement;
+import com.nc.labs.di.Injection;
 import com.nc.labs.search.Searcher;
-import com.nc.labs.sorts.BubbleSort;
+import com.nc.labs.sorts.BaseSort.BubbleSort;
 import com.nc.labs.sorts.ISort;
 
 
-import java.io.File;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.UUID;
@@ -20,6 +21,8 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
     private static final int capacity = 10;
     private int occupancy = 0;
     private T[] array;
+
+    @Injection
     private ISort<T> typeOfSort;
 
     @SuppressWarnings("unchecked")
