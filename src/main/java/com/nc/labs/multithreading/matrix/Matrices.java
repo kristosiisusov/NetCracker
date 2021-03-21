@@ -1,4 +1,4 @@
-package com.nc.labs.multithreading;
+package com.nc.labs.multithreading.matrix;
 
 public class Matrices {
     private static Integer[][] a;

@@ -1,5 +1,6 @@
 package com.nc.labs.multithreading;
 
+import com.nc.labs.multithreading.matrix.Matrices;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
