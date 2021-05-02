@@ -8,9 +8,13 @@ import java.util.Objects;
 public class Channel {
     String name;
 
+    public Channel() {
+    }
+
     public Channel(String name) {
         this.name = name;
     }
+
     public String getName() {
         return name;
     }

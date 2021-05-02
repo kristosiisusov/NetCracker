@@ -6,6 +6,9 @@ public class Speed {
     TypeOfSpeed typeOfSpeed;
     double value;
 
+    public Speed() {
+    }
+
     public Speed(TypeOfSpeed typeOfSpeed, double value) {
         this.typeOfSpeed = typeOfSpeed;
         this.value = value;

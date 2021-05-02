@@ -9,18 +9,18 @@ import com.nc.labs.introduction.agreements.wiredinternet.AgreementOfWiredInterne
 import com.nc.labs.introduction.agreements.wiredinternet.TypeOfSpeed;
 import com.nc.labs.introduction.people.Gender;
 import com.nc.labs.introduction.people.Person;
-import com.nc.labs.introduction.repositories.IRepository;
-import com.nc.labs.introduction.repositories.RepositoryList;
 import com.nc.labs.introduction.sorts.BubbleSort;
 import com.nc.labs.introduction.sorts.SelectionSort;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RepositoryListTest {
     static Person person;

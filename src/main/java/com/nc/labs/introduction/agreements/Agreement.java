@@ -1,11 +1,19 @@
 package com.nc.labs.introduction.agreements;
 
+import com.nc.labs.introduction.agreements.digitaltv.AgreementOfDigitalTv;
+import com.nc.labs.introduction.agreements.mobileconnection.AgreementOfMobileConnection;
+import com.nc.labs.introduction.agreements.wiredinternet.AgreementOfWiredInternet;
 import com.nc.labs.introduction.people.Person;
+import io.github.threetenjaxb.core.LocalDateXmlAdapter;
 
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlSeeAlso;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
+@XmlSeeAlso({AgreementOfWiredInternet.class, AgreementOfMobileConnection.class, AgreementOfDigitalTv.class})
 public abstract class Agreement {
     private UUID id;
     private LocalDate beginning;
@@ -24,6 +32,11 @@ public abstract class Agreement {
         this.owner = owner;
     }
 
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    @XmlJavaTypeAdapter(value = LocalDateXmlAdapter.class)
     public LocalDate getBeginning() {
         return beginning;
     }
@@ -32,10 +45,12 @@ public abstract class Agreement {
         this.beginning = beginning;
     }
 
+    @XmlAttribute
     public UUID getId() {
         return id;
     }
 
+    @XmlJavaTypeAdapter(value = LocalDateXmlAdapter.class)
     public LocalDate getEnd() {
         return end;
     }

@@ -1,7 +1,10 @@
 package com.nc.labs.introduction.people;
 
 
+import com.nc.labs.introduction.Passport;
+import io.github.threetenjaxb.core.LocalDateXmlAdapter;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.Objects;
@@ -20,6 +23,13 @@ public class Person {
     private int age;
     Passport passport;
 
+    public Person() {
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public Person(String lastName, String firstName, String middleName, LocalDate birthdate,
                   Gender gender, int seriesOfPassport, int numberOfPassport) {
         this.id = UUID.randomUUID();
@@ -29,8 +39,9 @@ public class Person {
         this.birthdate = birthdate;
         this.gender = gender;
         this.age = calculateAge(birthdate);
-        this.passport = new Passport(seriesOfPassport,numberOfPassport);
+        this.passport = new Passport(seriesOfPassport, numberOfPassport);
     }
+
 
     public Passport getPassport() {
         return passport;
@@ -41,58 +52,20 @@ public class Person {
     }
 
     /**
-     * class to store the data from person's passport
-     */
-    public class Passport{
-        private int seriesOfPassport;
-        private int numberOfPassport;
-
-        public Passport(int seriesOfPassport, int numberOfPassport) {
-            this.seriesOfPassport = seriesOfPassport;
-            this.numberOfPassport = numberOfPassport;
-
-        }
-
-        public int getSeriesOfPassport() {
-            return seriesOfPassport;
-        }
-
-        public void setSeriesOfPassport(int seriesOfPassport) {
-            this.seriesOfPassport = seriesOfPassport;
-        }
-
-        public int getNumberOfPassport() {
-            return numberOfPassport;
-        }
-
-        public void setNumberOfPassport(int numberOfPassport) {
-            this.numberOfPassport = numberOfPassport;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Passport passport = (Passport) o;
-            return seriesOfPassport == passport.seriesOfPassport &&
-                    numberOfPassport == passport.numberOfPassport;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(seriesOfPassport, numberOfPassport);
-        }
-    }
-
-    /**
      * calculating age of person.
+     *
      * @return years of person. can be modify in the long run so
      * that would return month and days too
      */
-    private Integer calculateAge(LocalDate birthdate){
+    public Integer calculateAge(LocalDate birthdate) {
         Period period = Period.between(birthdate, LocalDate.now());
         return period.getYears();
     }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public UUID getId() {
         return id;
     }
@@ -121,6 +94,7 @@ public class Person {
         this.middleName = middleName;
     }
 
+    @XmlJavaTypeAdapter(value = LocalDateXmlAdapter.class)
     public LocalDate getBirthdate() {
         return birthdate;
     }

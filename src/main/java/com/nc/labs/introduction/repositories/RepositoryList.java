@@ -6,7 +6,9 @@ import com.nc.labs.introduction.search.Searcher;
 import com.nc.labs.introduction.sorts.BubbleSort;
 import com.nc.labs.introduction.sorts.ISort;
 
-
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.UUID;
@@ -15,9 +17,11 @@ import java.util.function.Predicate;
 /**
  * expanding repository which hold different kinds of agreement
  */
+@XmlRootElement(name = "agreements")
 public class RepositoryList<T extends Agreement> implements IRepository<T> {
     private static final int capacity = 10;
     private int occupancy = 0;
+    @XmlElement(name = "agreement")
     private T[] array;
     private ISort<T> typeOfSort;
 
@@ -25,6 +29,10 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
     public RepositoryList() {
         this.array = (T[]) new Agreement[capacity];
         typeOfSort = new BubbleSort<>();
+    }
+
+    public T[] getArray() {
+        return array;
     }
 
     @SuppressWarnings("unchecked")
@@ -45,6 +53,7 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
         typeOfSort = new BubbleSort<>();
     }
 
+    @XmlTransient
     public ISort<T> getTypeOfSort() {
         return typeOfSort;
     }
@@ -180,5 +189,6 @@ public class RepositoryList<T extends Agreement> implements IRepository<T> {
     public T getItemsByIndex(int index){
         return array[index];
     }
+
 }
 
