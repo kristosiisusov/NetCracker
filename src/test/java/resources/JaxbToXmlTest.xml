@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<agreements>
+    <agreement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="agreementOfMobileConnection"
+               id="c5684183-9322-4df2-b7b4-893145825a58">
+        <beginning>2020-11-21</beginning>
+        <end>2020-04-08</end>
+        <number>880055536</number>
+        <owner>
+            <age>30</age>
+            <birthdate>1990-05-15</birthdate>
+            <firstName>Emma</firstName>
+            <gender>FEMALE</gender>
+            <id>76d12af4-e691-4fcd-8591-7a984a626713</id>
+            <lastName>Watson</lastName>
+            <middleName>Charlotte</middleName>
+            <passport>
+                <numberOfPassport>123456</numberOfPassport>
+                <seriesOfPassport>2002</seriesOfPassport>
+            </passport>
+        </owner>
+        <countOfGbTraffic>5</countOfGbTraffic>
+        <countOfMinutes>500</countOfMinutes>
+        <countOfSms>100</countOfSms>
+    </agreement>
+    <agreement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="agreementOfWiredInternet"
+               id="72bb5be9-20e8-4a06-acf3-913bfe1f5b24">
+        <beginning>2020-11-22</beginning>
+        <end>2020-04-08</end>
+        <number>880055537</number>
+        <owner>
+            <age>30</age>
+            <birthdate>1990-05-15</birthdate>
+            <firstName>Emma</firstName>
+            <gender>FEMALE</gender>
+            <id>76d12af4-e691-4fcd-8591-7a984a626713</id>
+            <lastName>Watson</lastName>
+            <middleName>Charlotte</middleName>
+            <passport>
+                <numberOfPassport>123456</numberOfPassport>
+                <seriesOfPassport>2002</seriesOfPassport>
+            </passport>
+        </owner>
+        <connectionSpeed>
+            <typeOfSpeed>MBIT</typeOfSpeed>
+            <value>5.0</value>
+        </connectionSpeed>
+    </agreement>
+    <agreement xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="agreementOfDigitalTv"
+               id="1fca1ad4-e585-4381-809c-3ed7a98ea600">
+        <beginning>2020-11-23</beginning>
+        <end>2020-04-08</end>
+        <number>880055538</number>
+        <owner>
+            <age>30</age>
+            <birthdate>1990-05-15</birthdate>
+            <firstName>Emma</firstName>
+            <gender>FEMALE</gender>
+            <id>76d12af4-e691-4fcd-8591-7a984a626713</id>
+            <lastName>Watson</lastName>
+            <middleName>Charlotte</middleName>
+            <passport>
+                <numberOfPassport>123456</numberOfPassport>
+                <seriesOfPassport>2002</seriesOfPassport>
+            </passport>
+        </owner>
+        <packageOfChannel>
+            <name>TestFirstChannel</name>
+        </packageOfChannel>
+    </agreement>
+</agreements>
